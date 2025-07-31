@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 
-export const dynamic = 'force-dynamic'; // Prevents prerendering
+export const dynamic = 'force-dynamic';
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
@@ -27,15 +27,15 @@ export default function Dashboard() {
     router.push('/login');
   };
 
-  if (!user) return <div>Loading...</div>;
+  if (!user) return <div className="text-gray-600">Loading...</div>;
 
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <div className="p-6 bg-white shadow-md rounded">
-        <h1 className="text-2xl font-bold">Welcome, {user.email}</h1>
+      <div className="card text-center">
+        <h1 className="text-2xl font-bold mb-4 text-gray-900">Welcome, {user.email}</h1>
         <button
           onClick={handleSignOut}
-          className="mt-4 p-2 bg-red-500 text-white rounded"
+          className="btn btn-secondary mt-4"
         >
           Sign Out
         </button>

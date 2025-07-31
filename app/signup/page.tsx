@@ -30,31 +30,29 @@ export default function SignUp() {
 
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <form onSubmit={handleSignUp} className="flex flex-col gap-4 p-6 bg-white shadow-md rounded">
-        <h1 className="text-2xl font-bold">Sign Up</h1>
-        {error && <p className="text-red-500">{error}</p>}
+      <form onSubmit={handleSignUp} className="card">
+        <h1 className="text-2xl font-bold mb-4 text-gray-900">Sign Up</h1>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="p-2 border rounded"
-          required
+          className="w-full p-2 mb-4 border rounded"
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="p-2 border rounded"
-          required
+          className="w-full p-2 mb-4 border rounded"
         />
-        <button type="submit" className="p-2 bg-blue-500 text-white rounded">
+        <button type="submit" className="btn btn-primary w-full">
           Sign Up
         </button>
-        <p>
+        <p className="mt-4 text-gray-600">
           Already have an account?{' '}
-          <a href="/login" className="text-blue-500">
+          <a href="/login" className="text-blue-600 hover:underline">
             Log In
           </a>
         </p>
