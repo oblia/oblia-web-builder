@@ -67,7 +67,10 @@ export default function Dashboard() {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <aside className="bg-lovable-blue shadow-lg p-6 min-w-fit">
+      <aside className="bg-gray-200 shadow-lg p-6 min-w-fit">
+        <button onClick={handleSignOut} className="btn btn-secondary mb-6 w-full">
+          Sign Out
+        </button>
         {profile ? (
           <div className="text-left space-y-4 whitespace-nowrap">
             <h2 className="text-2xl font-bold text-gray-900">Welcome {profile.name || 'User'}</h2>
@@ -111,9 +114,7 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="flex-1 p-6">
-        <button onClick={handleSignOut} className="btn btn-secondary">
-          Sign Out
-        </button>
+        {/* Add future content here */}
       </main>
     </div>
   );
