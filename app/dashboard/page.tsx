@@ -29,6 +29,11 @@ export default function Dashboard() {
           .single();
         setProfile(profileData || null);
         if (!profileData) setShowForm(true); // Show form if no profile
+        else {
+          setName(profileData.name || '');
+          setAddress(profileData.address || '');
+          setPhoneNumber(profileData.phone_number || '');
+        }
       }
     };
     getUserAndProfile();
@@ -60,14 +65,15 @@ export default function Dashboard() {
   if (!user) return <div className="text-gray-600">Loading...</div>;
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="card text-center">
-        <h1 className="text-2xl font-bold mb-4 text-gray-900">Welcome, {user.email}</h1>
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
+      <aside className="w-64 bg-white shadow-lg p-6">
         {profile ? (
-          <div className="mb-4">
-            <p>Name: {profile.name || 'Not set'}</p>
-            <p>Address: {profile.address || 'Not set'}</p>
-            <p>Phone: {profile.phone_number || 'Not set'}</p>
+          <div className="text-left space-y-4">
+            <h2 className="text-2xl font-bold text-gray-900">Welcome {profile.name || 'User'}</h2>
+            <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>Address:</strong> {profile.address || 'Not set'}</p>
+            <p><strong>Phone:</strong> {profile.phone_number || 'Not set'}</p>
           </div>
         ) : showForm ? (
           <form onSubmit={handleSaveProfile} className="space-y-4">
@@ -101,10 +107,14 @@ export default function Dashboard() {
             {message && <p className="text-green-500">{message}</p>}
           </form>
         ) : null}
-        <button onClick={handleSignOut} className="btn btn-secondary mt-4">
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 p-6">
+        <button onClick={handleSignOut} className="btn btn-secondary">
           Sign Out
         </button>
-      </div>
+      </main>
     </div>
   );
 }
