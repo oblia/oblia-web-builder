@@ -14,9 +14,6 @@ export default function Home() {
           <Link href="/login" className="p-2 bg-green-500 text-white rounded">
             Log In
           </Link>
-          <Link href="/app" className="p-2 bg-purple-500 text-white rounded">
-            Test App Route
-          </Link>
         </div>
       </div>
     </div>
