@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 export default function Home() {
+  console.log('Home page rendered at:', new Date().toISOString());
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="p-6 bg-white shadow-md rounded text-center">

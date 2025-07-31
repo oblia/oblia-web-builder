@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 
 export default function SignUp() {
+  console.log('SignUp page rendered at:', new Date().toISOString());
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -12,14 +13,17 @@ export default function SignUp() {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('SignUp form submitted with:', { email, password });
     setError(null);
     const { error } = await supabase.auth.signUp({
       email,
       password,
     });
     if (error) {
+      console.error('SignUp error:', error.message);
       setError(error.message);
     } else {
+      console.log('SignUp successful, redirecting to /login');
       router.push('/login');
     }
   };

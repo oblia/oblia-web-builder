@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 
 export default function Login() {
+  console.log('Login page rendered at:', new Date().toISOString());
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -12,14 +13,17 @@ export default function Login() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Login form submitted with:', { email, password });
     setError(null);
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     if (error) {
+      console.error('Login error:', error.message);
       setError(error.message);
     } else {
+      console.log('Login successful, redirecting to /dashboard');
       router.push('/dashboard');
     }
   };
