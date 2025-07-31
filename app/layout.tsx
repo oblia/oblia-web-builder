@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import './globals.css';
+import Navbar from 'app/components/Navbar';
 
 export const metadata = {
   title: 'My Static Site',
@@ -14,16 +14,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <nav className="bg-gray-800 p-4 text-white">
-          <div className="container mx-auto flex justify-between">
-            <Link href="/" className="text-xl font-bold">Home</Link>
-            <div className="space-x-4">
-              <Link href="/signup">Sign Up</Link>
-              <Link href="/login">Log In</Link>
-            </div>
-          </div>
-        </nav>
-        <main className="container mx-auto p-4">{children}</main>
+        <Navbar />
+        {children}
       </body>
     </html>
   );

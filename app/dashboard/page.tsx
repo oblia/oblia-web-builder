@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
+import Section from 'app/components/Section';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,6 +14,7 @@ export default function Dashboard() {
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [showForm, setShowForm] = useState(false);
+  const [editForm, setEditForm] = useState(false); // State for edit form
   const [message, setMessage] = useState<string | null>(null);
   const router = useRouter();
 
@@ -53,13 +55,13 @@ export default function Dashboard() {
     } else {
       setMessage('Profile saved successfully!');
       setShowForm(false);
+      setEditForm(false); // Close edit form after saving
       setProfile({ name, address, phone_number: phoneNumber });
     }
   };
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push('/login');
+  const handleEditProfile = () => {
+    setEditForm(true);
   };
 
   if (!user) return <div className="text-gray-600">Loading...</div>;
@@ -68,16 +70,30 @@ export default function Dashboard() {
     <div className="flex min-h-screen">
       {/* Sidebar */}
       <aside className="bg-gray-200 shadow-lg p-6 min-w-fit">
-        <button onClick={handleSignOut} className="btn btn-secondary mb-6 w-full">
-          Sign Out
-        </button>
         {profile ? (
-          <div className="text-left space-y-4 whitespace-nowrap">
-            <h2 className="text-2xl font-bold text-gray-900">Welcome {profile.name || 'User'}</h2>
-            <p><strong>Email:</strong> {user.email}</p>
-            <p><strong>Address:</strong> {profile.address || 'Not set'}</p>
-            <p><strong>Phone:</strong> {profile.phone_number || 'Not set'}</p>
-          </div>
+          <>
+            <Section title="Profile">
+              <div>
+                <p><strong>Name:</strong> {profile.name || 'Not set'}</p>
+                <p><strong>Email:</strong> {user.email}</p>
+                <p><strong>Address:</strong> {profile.address || 'Not set'}</p>
+                <p><strong>Phone:</strong> {profile.phone_number || 'Not set'}</p>
+                <button
+                  onClick={handleEditProfile}
+                  className="mt-2 btn btn-primary w-full"
+                >
+                  Edit
+                </button>
+              </div>
+            </Section>
+            <Section title="Projects">
+              <ul className="list-disc pl-5">
+                <li>Project 1</li>
+                <li>Project 2</li>
+                <li>Project 3</li>
+              </ul>
+            </Section>
+          </>
         ) : showForm ? (
           <form onSubmit={handleSaveProfile} className="space-y-4">
             <input
@@ -114,7 +130,45 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="flex-1 p-6">
-        {/* Add future content here */}
+        {editForm && profile && (
+          <form onSubmit={handleSaveProfile} className="space-y-4">
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="p-2 border rounded w-full"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="p-2 border rounded w-full"
+              required
+            />
+            <input
+              type="tel"
+              placeholder="Phone Number"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="p-2 border rounded w-full"
+              required
+            />
+            <button type="submit" className="btn btn-primary w-full">
+              Save Changes
+            </button>
+            <button
+              type="button"
+              onClick={() => setEditForm(false)}
+              className="mt-2 btn btn-secondary w-full"
+            >
+              Cancel
+            </button>
+            {message && <p className="text-green-500">{message}</p>}
+          </form>
+        )}
       </main>
     </div>
   );
