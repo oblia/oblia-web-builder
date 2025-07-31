@@ -28,7 +28,7 @@ export default function Dashboard() {
           .eq('user_id', user.id)
           .single();
         setProfile(profileData || null);
-        if (!profileData) setShowForm(true); // Show form if no profile
+        if (!profileData) setShowForm(true);
         else {
           setName(profileData.name || '');
           setAddress(profileData.address || '');
@@ -67,9 +67,9 @@ export default function Dashboard() {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-lg p-6">
+      <aside className="bg-lovable-blue shadow-lg p-6 min-w-fit">
         {profile ? (
-          <div className="text-left space-y-4">
+          <div className="text-left space-y-4 whitespace-nowrap">
             <h2 className="text-2xl font-bold text-gray-900">Welcome {profile.name || 'User'}</h2>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Address:</strong> {profile.address || 'Not set'}</p>
