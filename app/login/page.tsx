@@ -53,6 +53,12 @@ export default function Login() {
           Log In
         </button>
         <p>
+          Forgot password?{' '}
+          <a href="/reset-password" className="text-blue-500">
+            Reset Password
+          </a>
+        </p>
+        <p>
           Don&apos;t have an account?{' '}
           <a href="/signup" className="text-blue-500">
             Sign Up
