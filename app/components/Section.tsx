@@ -2,13 +2,11 @@
 
 import { useState } from 'react';
 
-export default function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-
+export default function Section({ title, children, isOpen, onToggle }: { title: string; children: React.ReactNode; isOpen: boolean; onToggle: (title: string) => void }) {
   return (
     <div className="mb-4">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => onToggle(title)}
         className="w-full text-left p-2 bg-gray-300 hover:bg-gray-400 rounded-t"
       >
         {title} {isOpen ? '▼' : '▶'}
