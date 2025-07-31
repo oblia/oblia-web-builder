@@ -11,8 +11,12 @@ export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
   const [profile, setProfile] = useState<any>(null);
   const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [businessName, setBusinessName] = useState('');
+  const [buildingNumber, setBuildingNumber] = useState('');
+  const [streetName, setStreetName] = useState('');
+  const [townCity, setTownCity] = useState('');
+  const [county, setCounty] = useState('');
+  const [postCode, setPostCode] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editForm, setEditForm] = useState(false); // State for edit form
   const [message, setMessage] = useState<string | null>(null);
@@ -34,8 +38,12 @@ export default function Dashboard() {
         if (!profileData) setShowForm(true);
         else {
           setName(profileData.name || '');
-          setAddress(profileData.address || '');
-          setPhoneNumber(profileData.phone_number || '');
+          setBusinessName(profileData.business_name || '');
+          setBuildingNumber(profileData.building_number || '');
+          setStreetName(profileData.street_name || '');
+          setTownCity(profileData.town_city || '');
+          setCounty(profileData.county || '');
+          setPostCode(profileData.post_code || '');
         }
       }
     };
@@ -47,8 +55,12 @@ export default function Dashboard() {
     const { error } = await supabase.from('profiles').upsert({
       user_id: user.id,
       name,
-      address,
-      phone_number: phoneNumber,
+      business_name: businessName,
+      building_number: buildingNumber,
+      street_name: streetName,
+      town_city: townCity,
+      county,
+      post_code: postCode,
       updated_at: new Date().toISOString(),
     }, { onConflict: 'user_id' });
     if (error) {
@@ -57,7 +69,7 @@ export default function Dashboard() {
       setMessage('Profile saved successfully!');
       setShowForm(false);
       setEditForm(false); // Close edit form after saving
-      setProfile({ name, address, phone_number: phoneNumber });
+      setProfile({ name, business_name: businessName, building_number: buildingNumber, street_name: streetName, town_city: townCity, county, post_code: postCode });
     }
   };
 
@@ -85,8 +97,12 @@ export default function Dashboard() {
               <div>
                 <p><strong>Name:</strong> {profile.name || 'Not set'}</p>
                 <p><strong>Email:</strong> {user.email}</p>
-                <p><strong>Address:</strong> {profile.address || 'Not set'}</p>
-                <p><strong>Phone:</strong> {profile.phone_number || 'Not set'}</p>
+                <p><strong>Business Name:</strong> {profile.business_name || 'Not set'}</p>
+                <p><strong>Building Number:</strong> {profile.building_number || 'Not set'}</p>
+                <p><strong>Street Name:</strong> {profile.street_name || 'Not set'}</p>
+                <p><strong>Town/City:</strong> {profile.town_city || 'Not set'}</p>
+                <p><strong>County:</strong> {profile.county || 'Not set'}</p>
+                <p><strong>Post Code:</strong> {profile.post_code || 'Not set'}</p>
                 <button
                   onClick={handleEditProfile}
                   className="mt-2 btn btn-primary w-full"
@@ -114,29 +130,61 @@ export default function Dashboard() {
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="p-2 border rounded w-full"
+              className="p-2 border rounded w-full text-sm"
               required
             />
             <input
               type="text"
-              placeholder="Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="p-2 border rounded w-full"
+              placeholder="Business Name"
+              value={businessName}
+              onChange={(e) => setBusinessName(e.target.value)}
+              className="p-2 border rounded w-full text-sm"
               required
             />
             <input
-              type="tel"
-              placeholder="Phone Number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="p-2 border rounded w-full"
+              type="text"
+              placeholder="Building Number"
+              value={buildingNumber}
+              onChange={(e) => setBuildingNumber(e.target.value)}
+              className="p-2 border rounded w-full text-sm"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Street Name"
+              value={streetName}
+              onChange={(e) => setStreetName(e.target.value)}
+              className="p-2 border rounded w-full text-sm"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Town/City"
+              value={townCity}
+              onChange={(e) => setTownCity(e.target.value)}
+              className="p-2 border rounded w-full text-sm"
+              required
+            />
+            <input
+              type="text"
+              placeholder="County"
+              value={county}
+              onChange={(e) => setCounty(e.target.value)}
+              className="p-2 border rounded w-full text-sm"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Post Code"
+              value={postCode}
+              onChange={(e) => setPostCode(e.target.value)}
+              className="p-2 border rounded w-full text-sm"
               required
             />
             <button type="submit" className="btn btn-primary w-full">
               Save Profile
             </button>
-            {message && <p className="text-green-500">{message}</p>}
+            {message && <p className="text-green-500 text-sm">{message}</p>}
           </form>
         ) : null}
       </aside>
@@ -156,17 +204,49 @@ export default function Dashboard() {
               />
               <input
                 type="text"
-                placeholder="Address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Business Name"
+                value={businessName}
+                onChange={(e) => setBusinessName(e.target.value)}
                 className="p-2 border rounded w-full text-sm"
                 required
               />
               <input
-                type="tel"
-                placeholder="Phone Number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                type="text"
+                placeholder="Building Number"
+                value={buildingNumber}
+                onChange={(e) => setBuildingNumber(e.target.value)}
+                className="p-2 border rounded w-full text-sm"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Street Name"
+                value={streetName}
+                onChange={(e) => setStreetName(e.target.value)}
+                className="p-2 border rounded w-full text-sm"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Town/City"
+                value={townCity}
+                onChange={(e) => setTownCity(e.target.value)}
+                className="p-2 border rounded w-full text-sm"
+                required
+              />
+              <input
+                type="text"
+                placeholder="County"
+                value={county}
+                onChange={(e) => setCounty(e.target.value)}
+                className="p-2 border rounded w-full text-sm"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Post Code"
+                value={postCode}
+                onChange={(e) => setPostCode(e.target.value)}
                 className="p-2 border rounded w-full text-sm"
                 required
               />
